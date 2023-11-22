@@ -28,6 +28,19 @@ function ToastProvider({ children }) {
     [toasts, addToast]
   );
 
+  React.useEffect(() => {
+    const closeAllToasts = (e) => {
+      if (e.key === "Escape") {
+        setToasts([]);
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('keydown', closeAllToasts);
+
+    return () => document.removeEventListener('keydown', closeAllToasts);
+  });
+
   return (
     <ToastContext.Provider value={value}>{children}</ToastContext.Provider>
   );
